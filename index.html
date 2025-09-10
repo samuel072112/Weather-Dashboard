@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1><i class="fas fa-cloud-sun"></i> Weather Dashboard</h1>
+            <p>Get real-time weather information for any location</p>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" id="cityInput" placeholder="Enter city name (e.g., Chennai, Hyderabad)">
+                <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+                <button id="locationBtn" title="Use current location"><i class="fas fa-location-arrow"></i></button>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loadingSpinner" class="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading weather data...</p>
+        </div>
+
+        <!-- Current Weather Display -->
+        <section id="currentWeather" class="current-weather">
+            <div class="weather-main">
+                <div class="weather-info">
+                    <h2 id="cityName">City Name</h2>
+                    <p id="currentDate">Date</p>
+                    <div class="temperature">
+                        <span id="currentTemp">--°</span>
+                        <img id="weatherIcon" src="" alt="Weather icon">
+                    </div>
+                    <p id="weatherDescription">Weather Description</p>
+                </div>
+                
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <i class="fas fa-eye"></i>
+                        <span>Feels like</span>
+                        <span id="feelsLike">--°</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-tint"></i>
+                        <span>Humidity</span>
+                        <span id="humidity">--%</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-wind"></i>
+                        <span>Wind Speed</span>
+                        <span id="windSpeed">-- km/h</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-thermometer-half"></i>
+                        <span>Pressure</span>
+                        <span id="pressure">-- hPa</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5-Day Forecast -->
+        <section id="forecast" class="forecast-section">
+            <h3><i class="fas fa-calendar-alt"></i> 5-Day Forecast</h3>
+            <div id="forecastContainer" class="forecast-container">
+            </div>
+        </section>
+
+        <!-- Saved Locations -->
+        <section class="saved-locations">
+            <h3><i class="fas fa-star"></i> Saved Locations</h3>
+            <div id="savedLocationsContainer" class="saved-container">
+                <p class="no-locations">No saved locations yet. Search for a city to get started!</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
