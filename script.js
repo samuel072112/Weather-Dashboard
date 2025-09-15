@@ -1,6 +1,5 @@
 class WeatherDashboard {
     constructor() {
-        // API configuration - You'll need to get a free API key from OpenWeatherMap
         this.API_KEY = '84ba262d833dd21c8031f255c6f2747b'; 
         this.BASE_URL = 'https://api.openweathermap.org/data/2.5';
         
@@ -51,40 +50,6 @@ class WeatherDashboard {
         this.cityInput.value = ''; // Clear input after search
     }
 
-    // Get user's current location using geolocation API
-    getCurrentLocation() {
-        if (!navigator.geolocation) {
-            this.showError('Geolocation is not supported by this browser');
-            return;
-        }
-
-        this.showLoading();
-        
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const { latitude, longitude } = position.coords;
-                await this.searchWeatherByCoords(latitude, longitude);
-            },
-            (error) => {
-                this.hideLoading();
-                switch(error.code) {
-                    case error.PERMISSION_DENIED:
-                        this.showError('Location access denied by user');
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        this.showError('Location information is unavailable');
-                        break;
-                    case error.TIMEOUT:
-                        this.showError('Location request timed out');
-                        break;
-                    default:
-                        this.showError('An unknown error occurred while retrieving location');
-                        break;
-                }
-            }
-        );
-    }
-
     // Search weather by city name
     async searchWeather(city) {
         try {
@@ -117,37 +82,6 @@ class WeatherDashboard {
         } catch (error) {
             console.error('Error fetching weather data:', error);
             this.showError(error.message || 'Failed to fetch weather data. Please try again.');
-        } finally {
-            this.hideLoading();
-        }
-    }
-
-    // Search weather by coordinates (for geolocation)
-    async searchWeatherByCoords(lat, lon) {
-        try {
-            this.showLoading();
-            this.hideError();
-            
-            // Fetch current weather by coordinates
-            const currentWeatherUrl = `${this.BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${this.API_KEY}&units=metric`;
-            const currentResponse = await fetch(currentWeatherUrl);
-            const currentData = await currentResponse.json();
-            
-            // Fetch 5-day forecast by coordinates
-            const forecastUrl = `${this.BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${this.API_KEY}&units=metric`;
-            const forecastResponse = await fetch(forecastUrl);
-            const forecastData = await forecastResponse.json();
-            
-            // Display the weather data
-            this.displayCurrentWeather(currentData);
-            this.displayForecast(forecastData);
-            
-            // Save location
-            this.saveLocation(currentData.name);
-            
-        } catch (error) {
-            console.error('Error fetching weather data:', error);
-            this.showError('Failed to fetch weather data for your location');
         } finally {
             this.hideLoading();
         }
